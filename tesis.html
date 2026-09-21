@@ -4,649 +4,662 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Tesis: Retorno a los motores atmosféricos de alta cilindrada con combustibles sostenibles y materiales de menor impacto. Ingeniería Automotriz.">
-    <title>Tesis: Retorno a los Motores Atmosféricos de Alta Cilindrada — Documento Digital</title>
+    <meta name="description" content="Tesis Interactiva: Retorno a los motores atmosféricos de alta cilindrada con combustibles sostenibles y materiales de menor impacto. Ingeniería Automotriz.">
+    <title>Tesis: Retorno a los Motores Atmosféricos de Alta Cilindrada — Libro Digital Interactivo</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,600;0,700;0,900;1,600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <style>
         /* ═══════════════════════════════════════════
-           TESIS DIGITAL READER STYLES
+           INTERACTIVE 3D BOOK VIEWER
            ═══════════════════════════════════════════ */
         :root {
-            --doc-bg: #071518;
-            --page-bg: #0b1e22;
-            --page-card: #0f282d;
-            --doc-border: rgba(0, 141, 142, 0.25);
-            --text-main: #e2e8f0;
-            --text-muted: #94a3b8;
-            --accent-teal: #008D8E;
-            --accent-bright: #00c6c7;
+            --book-bg: #071518;
+            --leather-outer: #8d4f1c;
+            --leather-mid: #b86e28;
+            --leather-light: #cf8438;
+            --page-cream: #fffdf9;
+            --page-warm: #f7f3e8;
+            --page-edge: #dec8a2;
+            --ribbon-color: #d24a27;
+            --ribbon-dark: #a83416;
+            --doc-text: #181c20;
+            --doc-blue: #0056b3;
+            --table-green: #297746;
         }
 
         body {
-            background: var(--doc-bg);
-            color: var(--text-main);
-            font-family: 'Inter', -apple-system, sans-serif;
+            background: var(--book-bg);
+            color: #ffffff;
+            font-family: 'Inter', Arial, sans-serif;
             margin: 0;
             padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
         }
 
-        /* Reading Progress Bar */
-        .progress-bar-wrap {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: rgba(0, 141, 142, 0.15);
-            z-index: 1000;
-        }
-
-        .progress-bar {
-            height: 100%;
-            width: 0%;
-            background: linear-gradient(90deg, #008D8E 0%, #00e5e6 100%);
-            transition: width 0.1s ease-out;
-        }
-
-        /* Top Action Bar */
-        .tesis-top-bar {
-            position: sticky;
-            top: 0;
+        /* Top Bar */
+        .book-top-bar {
             background: rgba(7, 21, 24, 0.95);
-            backdrop-filter: blur(14px);
-            border-bottom: 1px solid var(--doc-border);
-            padding: 12px 32px;
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0, 141, 142, 0.25);
+            padding: 10px 24px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            z-index: 100;
+            position: sticky;
+            top: 0;
+            z-index: 200;
+        }
+
+        .btb-left {
+            display: flex;
+            align-items: center;
             gap: 16px;
         }
 
-        .tesis-tb-left {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-        }
-
-        .tesis-btn-link {
+        .btb-btn {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            color: var(--accent-bright);
+            gap: 6px;
+            color: #00c6c7;
             text-decoration: none;
             font-size: 0.82rem;
-            font-weight: 600;
-            letter-spacing: 0.5px;
+            font-weight: 700;
             padding: 6px 14px;
             border-radius: 6px;
-            background: rgba(0, 141, 142, 0.1);
-            border: 1px solid rgba(0, 141, 142, 0.3);
+            background: rgba(0, 141, 142, 0.12);
+            border: 1px solid rgba(0, 141, 142, 0.35);
+            cursor: pointer;
             transition: all 0.2s ease;
         }
 
-        .tesis-btn-link:hover {
-            background: var(--accent-teal);
+        .btb-btn:hover {
+            background: var(--teal);
             color: #ffffff;
-            border-color: var(--accent-teal);
         }
 
-        .tesis-tb-title {
+        .btb-title {
             font-size: 0.88rem;
             font-weight: 700;
             color: #ffffff;
+            max-width: 460px;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            max-width: 450px;
-        }
-
-        .tesis-tb-actions {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .view-mode-toggle {
-            display: flex;
-            background: rgba(0, 0, 0, 0.35);
-            border: 1px solid var(--doc-border);
-            border-radius: 6px;
-            padding: 2px;
-        }
-
-        .view-mode-btn {
-            background: none;
-            border: none;
-            color: var(--text-muted);
-            padding: 6px 14px;
-            font-size: 0.78rem;
-            font-weight: 600;
-            cursor: pointer;
-            border-radius: 4px;
-            transition: all 0.2s ease;
-        }
-
-        .view-mode-btn.active {
-            background: var(--accent-teal);
-            color: #ffffff;
-        }
-
-        /* Layout Container */
-        .tesis-container {
-            display: flex;
-            max-width: 1360px;
-            margin: 0 auto;
-            padding: 36px 24px 80px;
-            gap: 40px;
-        }
-
-        /* Sidebar Index */
-        .tesis-sidebar {
-            width: 280px;
-            flex-shrink: 0;
-            position: sticky;
-            top: 76px;
-            height: calc(100vh - 100px);
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .sidebar-panel {
-            background: var(--page-bg);
-            border: 1px solid var(--doc-border);
-            border-radius: 10px;
-            padding: 20px;
-        }
-
-        .sidebar-title {
-            font-size: 0.75rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--accent-bright);
-            margin-bottom: 14px;
-            display: block;
-        }
-
-        .sidebar-nav {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-
-        .sidebar-nav a {
-            display: block;
-            color: var(--text-muted);
-            text-decoration: none;
-            font-size: 0.82rem;
-            padding: 8px 12px;
-            border-radius: 6px;
-            line-height: 1.35;
-            transition: all 0.2s ease;
-            border-left: 2px solid transparent;
-        }
-
-        .sidebar-nav a:hover,
-        .sidebar-nav a.active {
-            color: #ffffff;
-            background: rgba(0, 141, 142, 0.15);
-            border-left-color: var(--accent-bright);
-        }
-
-        .sidebar-meta {
-            font-size: 0.78rem;
-            color: var(--text-muted);
-            line-height: 1.5;
-        }
-
-        .sidebar-meta strong {
-            color: #ffffff;
-            display: block;
-            margin-bottom: 4px;
-        }
-
-        /* Document Reader Main */
-        .tesis-reader {
-            flex: 1;
-            min-width: 0;
-            display: flex;
-            flex-direction: column;
-            gap: 32px;
-        }
-
-        /* Academic Paper Page Frame */
-        .doc-page {
-            background: var(--page-card);
-            border: 1px solid var(--doc-border);
-            border-radius: 12px;
-            padding: 48px 56px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-            position: relative;
-        }
-
-        .doc-page-badge {
-            position: absolute;
-            top: 24px;
-            right: 32px;
-            font-size: 0.72rem;
-            font-weight: 700;
-            color: var(--accent-bright);
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            background: rgba(0, 141, 142, 0.12);
-            padding: 4px 10px;
-            border-radius: 4px;
-            border: 1px solid rgba(0, 141, 142, 0.25);
-        }
-
-        /* Cover Page Specific */
-        .doc-cover {
-            text-align: center;
-            padding: 70px 48px;
-            background: linear-gradient(180deg, #0f2c32 0%, #0a1b1e 100%);
-            border: 2px solid var(--accent-teal);
-        }
-
-        .cover-faculty {
-            font-size: 1.15rem;
-            font-weight: 800;
-            letter-spacing: 3px;
-            color: var(--accent-bright);
-            margin-bottom: 36px;
-            text-transform: uppercase;
-        }
-
-        .cover-title {
-            font-family: 'Playfair Display', Georgia, serif;
-            font-size: clamp(2rem, 3.2vw, 2.8rem);
-            font-weight: 700;
-            line-height: 1.25;
-            color: #ffffff;
-            margin: 0 auto 36px;
-            max-width: 780px;
-            font-style: italic;
-        }
-
-        .cover-authors-block {
-            margin-top: 50px;
-            padding-top: 30px;
-            border-top: 1px solid var(--doc-border);
-            font-size: 0.95rem;
-            color: var(--text-muted);
-        }
-
-        .cover-authors {
-            font-weight: 700;
-            font-size: 1.1rem;
-            color: #ffffff;
-            margin-top: 8px;
-        }
-
-        /* Headings & Text */
-        .doc-h1 {
-            font-family: 'Playfair Display', Georgia, serif;
-            font-size: 2rem;
-            color: #ffffff;
-            margin: 0 0 20px 0;
-            padding-bottom: 12px;
-            border-bottom: 1px solid var(--doc-border);
-        }
-
-        .doc-h2 {
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: var(--accent-bright);
-            margin: 32px 0 16px 0;
-        }
-
-        .doc-h3 {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: #ffffff;
-            margin: 24px 0 12px 0;
-        }
-
-        .doc-p {
-            font-size: 0.95rem;
-            line-height: 1.8;
-            color: #cbd5e1;
-            margin: 0 0 18px 0;
-            text-align: justify;
-        }
-
-        /* Bullet Points Grid */
-        .doc-bullets {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 16px;
-            margin: 24px 0;
         }
 
         @media (max-width: 768px) {
-            .doc-bullets { grid-template-columns: 1fr; }
+            .btb-title { display: none; }
         }
 
-        .bullet-item {
-            background: rgba(0, 0, 0, 0.25);
-            border: 1px solid rgba(0, 141, 142, 0.2);
-            border-radius: 8px;
-            padding: 14px 16px;
-            font-size: 0.88rem;
-            line-height: 1.5;
+        /* Book Stage */
+        .book-stage {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 24px 16px 40px;
+            position: relative;
         }
 
-        .bullet-item strong {
-            color: var(--accent-bright);
-            display: block;
-            margin-bottom: 4px;
+        /* Instruction prompt */
+        .book-tip {
+            font-size: 0.8rem;
+            color: rgba(0, 198, 199, 0.85);
+            margin-bottom: 16px;
+            text-align: center;
+            letter-spacing: 0.5px;
+            font-weight: 500;
         }
 
-        /* Table Design */
-        .doc-table-wrap {
-            margin: 24px 0;
-            overflow-x: auto;
-            border-radius: 8px;
-            border: 1px solid var(--doc-border);
-        }
-
-        .doc-table {
+        /* The Physical Book Wrapper */
+        .book-wrapper {
+            position: relative;
+            max-width: 1200px;
             width: 100%;
-            border-collapse: collapse;
-            font-size: 0.9rem;
-            text-align: left;
+            perspective: 2000px;
+            display: flex;
+            justify-content: center;
         }
 
-        .doc-table th {
-            background: #005F60;
-            color: #ffffff;
+        /* Leather Hardcover Base */
+        .book-cover {
+            position: relative;
+            width: 100%;
+            background: linear-gradient(135deg, var(--leather-light) 0%, var(--leather-mid) 40%, var(--leather-outer) 100%);
+            border-radius: 18px;
+            padding: 14px 18px 22px;
+            box-shadow: 
+                0 22px 50px rgba(0, 0, 0, 0.75),
+                0 8px 20px rgba(0, 0, 0, 0.5),
+                inset 0 2px 4px rgba(255, 255, 255, 0.35),
+                inset 0 -3px 6px rgba(0, 0, 0, 0.45);
+            border: 2px solid #6e3910;
+        }
+
+        /* Outer Page Edge Layers (stacked paper look) */
+        .book-pages-stack {
+            position: relative;
+            background: var(--page-edge);
+            border-radius: 10px;
+            padding: 6px 10px 10px;
+            box-shadow: 
+                inset 0 3px 6px rgba(0,0,0,0.25),
+                0 4px 10px rgba(0,0,0,0.3);
+            border-bottom: 4px solid #bba37a;
+        }
+
+        /* Open Book 2-Page Spread */
+        .book-spread {
+            display: flex;
+            background: var(--page-cream);
+            border-radius: 8px;
+            min-height: 740px;
+            position: relative;
+            box-shadow: 
+                0 5px 25px rgba(0,0,0,0.35),
+                inset 0 0 40px rgba(180, 150, 110, 0.15);
+            overflow: hidden;
+            border: 1px solid #dcd1be;
+        }
+
+        /* Page Common Styling */
+        .book-page {
+            flex: 1;
+            padding: 42px 48px 50px;
+            position: relative;
+            color: var(--doc-text);
+            font-size: 0.88rem;
+            line-height: 1.68;
+            cursor: pointer;
+            user-select: none;
+            display: flex;
+            flex-direction: column;
+            transition: background 0.2s ease, transform 0.2s ease;
+        }
+
+        .book-page:hover {
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Left page subtle curve & click target */
+        .book-page-left {
+            background: linear-gradient(to right, #fbf7ee 0%, #fffdf8 88%, #efe6d2 100%);
+            border-right: 1px solid #dcd2bf;
+            box-shadow: inset -15px 0 25px rgba(0, 0, 0, 0.04);
+        }
+
+        /* Right page subtle curve & click target */
+        .book-page-right {
+            background: linear-gradient(to right, #eae0ca 0%, #fffdf8 12%, #fbf7ee 100%);
+            box-shadow: inset 15px 0 25px rgba(0, 0, 0, 0.04);
+        }
+
+        /* Central Spine Shadow */
+        .book-spine-shadow {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            width: 44px;
+            transform: translateX(-50%);
+            background: linear-gradient(to right, 
+                rgba(0, 0, 0, 0.18) 0%, 
+                rgba(0, 0, 0, 0.08) 25%, 
+                rgba(0, 0, 0, 0.22) 50%, 
+                rgba(0, 0, 0, 0.08) 75%, 
+                rgba(0, 0, 0, 0.18) 100%);
+            pointer-events: none;
+            z-index: 20;
+        }
+
+        /* Ribbon Bookmark (like reference illustration) */
+        .book-ribbon {
+            position: absolute;
+            top: -14px;
+            left: 50%;
+            width: 22px;
+            height: calc(100% + 36px);
+            transform: translateX(-50%);
+            background: linear-gradient(to right, var(--ribbon-dark), var(--ribbon-color) 45%, var(--ribbon-dark));
+            box-shadow: 
+                0 6px 14px rgba(0,0,0,0.5),
+                inset 1px 0 2px rgba(255,255,255,0.3);
+            z-index: 30;
+            pointer-events: none;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: center;
+        }
+
+        /* V-Notch at bottom of ribbon */
+        .book-ribbon::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 0;
+            height: 0;
+            border-left: 11px solid transparent;
+            border-right: 11px solid transparent;
+            border-top: 11px solid var(--ribbon-color);
+        }
+
+        /* Page Number Footer */
+        .page-num {
+            margin-top: auto;
+            padding-top: 14px;
+            font-size: 0.78rem;
             font-weight: 700;
-            padding: 14px 18px;
+            color: #8c7d6b;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-top: 1px solid rgba(0,0,0,0.06);
+        }
+
+        .page-click-hint {
+            font-size: 0.72rem;
+            color: #b09e86;
+            font-weight: 500;
+        }
+
+        /* ═══════════════════════════════════════════
+           DOCUMENT CONTENT TYPOGRAPHY (EXACT AS PDF)
+           ═══════════════════════════════════════════ */
+        .doc-title-main {
+            font-family: Arial, sans-serif;
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: #000000;
+            margin: 0 0 28px 0;
             letter-spacing: 0.5px;
         }
 
-        .doc-table td {
-            padding: 12px 18px;
-            border-bottom: 1px solid rgba(0, 141, 142, 0.15);
-            color: #e2e8f0;
-        }
-
-        .doc-table tr:nth-child(even) {
-            background: rgba(0, 0, 0, 0.2);
-        }
-
-        .doc-table tr:hover {
-            background: rgba(0, 141, 142, 0.1);
-        }
-
-        .table-cifra {
-            font-weight: 700;
-            color: var(--accent-bright);
-            font-family: monospace;
-            font-size: 1rem;
-        }
-
-        /* Timeline History */
-        .timeline-wrap {
-            position: relative;
-            margin: 32px 0 24px;
-            padding-left: 28px;
-            border-left: 2px solid var(--accent-teal);
-        }
-
-        .timeline-node {
-            position: relative;
-            margin-bottom: 24px;
-        }
-
-        .timeline-node::before {
-            content: '';
-            position: absolute;
-            left: -35px;
-            top: 4px;
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: var(--accent-bright);
-            box-shadow: 0 0 10px rgba(0, 198, 199, 0.8);
-        }
-
-        .timeline-year {
+        .doc-faculty-cover {
+            font-size: 1.25rem;
             font-weight: 800;
-            color: var(--accent-bright);
-            font-size: 0.95rem;
-            margin-bottom: 4px;
+            text-align: center;
+            margin: 50px 0 80px 0;
+            letter-spacing: 1px;
+            color: #000000;
         }
 
-        .timeline-desc {
-            font-size: 0.9rem;
-            line-height: 1.6;
-            color: #cbd5e1;
+        .doc-title-cover {
+            font-size: 1.3rem;
+            font-weight: 700;
+            font-style: italic;
+            line-height: 1.45;
+            text-align: left;
+            margin: 0 0 120px 0;
+            color: #111111;
         }
 
-        /* Academic Source Citations */
-        .doc-source {
-            margin-top: 30px;
-            padding-top: 14px;
-            border-top: 1px dashed rgba(0, 141, 142, 0.25);
+        .doc-author-cover {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #000000;
+            margin-top: auto;
+            padding-bottom: 20px;
+        }
+
+        .doc-h1 {
+            font-family: Arial, sans-serif;
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: #000000;
+            margin: 0 0 16px 0;
+        }
+
+        .doc-h2 {
+            font-family: Arial, sans-serif;
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #000000;
+            margin: 18px 0 8px 0;
+        }
+
+        .doc-p {
+            font-family: Arial, sans-serif;
+            font-size: 0.88rem;
+            line-height: 1.62;
+            color: #1a1a1a;
+            margin: 0 0 14px 0;
+            text-align: justify;
+        }
+
+        /* Bullet List */
+        .doc-list {
+            margin: 10px 0 14px 0;
+            padding-left: 20px;
+            font-family: Arial, sans-serif;
+            font-size: 0.85rem;
+            line-height: 1.55;
+            color: #1a1a1a;
+        }
+
+        .doc-list li {
+            margin-bottom: 8px;
+            text-align: justify;
+        }
+
+        .doc-list li strong {
+            color: #000000;
+        }
+
+        /* Table from PDF Page 4 */
+        .pdf-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 14px 0 16px 0;
+            font-family: Arial, sans-serif;
             font-size: 0.78rem;
-            color: var(--text-muted);
+        }
+
+        .pdf-table th {
+            background: var(--table-green);
+            color: #ffffff;
+            font-weight: 700;
+            padding: 9px 12px;
+            text-align: left;
+            border: 1px solid #23653b;
+        }
+
+        .pdf-table td {
+            padding: 8px 12px;
+            border: 1px solid #d4dec9;
+            color: #111111;
+        }
+
+        .pdf-table tr:nth-child(even) {
+            background: #f4f8f2;
+        }
+
+        /* Source Link */
+        .doc-url {
+            color: var(--doc-blue);
+            text-decoration: underline;
+            font-size: 0.8rem;
+            word-break: break-all;
+            display: inline-block;
+            margin-top: 6px;
+        }
+
+        /* Book Controls Below */
+        .book-controls {
             display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            margin-top: 24px;
+            z-index: 50;
+        }
+
+        .ctrl-btn {
+            background: rgba(0, 141, 142, 0.15);
+            border: 1.5px solid rgba(0, 141, 142, 0.4);
+            color: #00c6c7;
+            padding: 10px 22px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 0.8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-flex;
             align-items: center;
             gap: 8px;
         }
 
-        .doc-source a {
-            color: var(--accent-bright);
-            text-decoration: none;
-            word-break: break-all;
+        .ctrl-btn:hover:not(:disabled) {
+            background: var(--teal);
+            border-color: var(--teal);
+            color: #ffffff;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 16px rgba(0, 141, 142, 0.35);
         }
 
-        .doc-source a:hover {
-            text-decoration: underline;
+        .ctrl-btn:disabled {
+            opacity: 0.35;
+            cursor: not-allowed;
+            border-color: rgba(255, 255, 255, 0.15);
+            color: rgba(255, 255, 255, 0.4);
         }
 
-        /* Page Separator in Page Mode */
-        .page-mode-wrapper .doc-page {
-            margin-bottom: 40px;
+        .spread-indicator {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #ffffff;
+            background: rgba(0, 0, 0, 0.4);
+            padding: 8px 18px;
+            border-radius: 20px;
+            border: 1px solid rgba(0, 141, 142, 0.3);
         }
 
+        /* Spread Quick Selector */
+        .spread-pills {
+            display: flex;
+            gap: 8px;
+            margin-top: 14px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .pill-btn {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #cbd5e1;
+            padding: 4px 12px;
+            border-radius: 14px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .pill-btn.active, .pill-btn:hover {
+            background: var(--teal);
+            border-color: var(--teal);
+            color: #ffffff;
+        }
+
+        /* Responsive */
         @media (max-width: 900px) {
-            .tesis-sidebar { display: none; }
-            .doc-page { padding: 32px 24px; }
-            .tesis-tb-title { display: none; }
-        }
+            .book-spread {
+                flex-direction: column;
+                min-height: auto;
+            }
 
-        /* Print Media Style */
-        @media print {
-            .site-nav, .tesis-top-bar, .tesis-sidebar, .progress-bar-wrap { display: none !important; }
-            body, .doc-page { background: #ffffff !important; color: #000000 !important; }
-            .doc-page { border: none !important; box-shadow: none !important; padding: 0 !important; margin-bottom: 30px !important; page-break-after: always; }
-            .doc-table th { background: #e2e8f0 !important; color: #000000 !important; }
-            .cover-title, .doc-h1, .doc-h2, .doc-h3, strong { color: #000000 !important; }
-            .doc-p, .timeline-desc, .bullet-item { color: #333333 !important; }
+            .book-spine-shadow, .book-ribbon {
+                display: none;
+            }
+
+            .book-page {
+                padding: 30px 24px;
+            }
+
+            .book-page-left {
+                border-right: none;
+                border-bottom: 2px dashed #dcd2bf;
+            }
         }
     </style>
 </head>
 
 <body>
 
-    <!-- ═ Reading Progress ═ -->
-    <div class="progress-bar-wrap">
-        <div class="progress-bar" id="progress-bar"></div>
-    </div>
-
-    <!-- ═ Unified Nav ═ -->
-    <nav class="site-nav">
-        <a href="index.html" class="site-nav-logo">
-            <span class="logo-f">F</span><span class="logo-1">1</span>
-        </a>
-        <ul class="site-nav-links">
-            <li><a href="index.html">Inicio</a></li>
-            <li><a href="motores.html">Motores 3D</a></li>
-            <li><a href="tesis.html" class="active">Tesis</a></li>
-        </ul>
-        <a href="motores.html" class="site-nav-cta">Ver Motores 3D →</a>
-    </nav>
-
-    <!-- ═ Top Reader Action Bar ═ -->
-    <header class="tesis-top-bar">
-        <div class="tesis-tb-left">
-            <a href="index.html" class="tesis-btn-link">← Volver al Inicio</a>
-            <span class="tesis-tb-title">Tesis: Retorno a los motores atmosféricos de alta cilindrada</span>
+    <!-- ═ Top Bar ═ -->
+    <header class="book-top-bar">
+        <div class="btb-left">
+            <a href="index.html" class="btb-btn">← Inicio</a>
+            <span class="btb-title">Tesis: Retorno a los motores atmosféricos de alta cilindrada</span>
         </div>
-        <div class="tesis-tb-actions">
-            <button class="tesis-btn-link" onclick="window.print()" title="Imprimir o guardar como PDF">
-                Imprimir Documento
-            </button>
-            <a href="motores.html" class="tesis-btn-link" style="background:var(--accent-teal); color:#fff;">
-                Ver Modelos 3D →
+        <div class="btb-right">
+            <a href="motores.html" class="btb-btn" style="background:var(--teal); color:#fff;">
+                Ver Motores 3D →
             </a>
         </div>
     </header>
 
-    <!-- ═ Main Content Layout ═ -->
-    <main class="tesis-container">
+    <!-- ═ Book Interactive Stage ═ -->
+    <main class="book-stage">
 
-        <!-- ═ Left Table of Contents Sidebar ═ -->
-        <aside class="tesis-sidebar">
-            <div class="sidebar-panel">
-                <span class="sidebar-title">Índice de Contenido</span>
-                <ul class="sidebar-nav" id="sidebar-nav">
-                    <li><a href="#sec-portada" class="active">Portada</a></li>
-                    <li><a href="#sec-intro">Introducción</a></li>
-                    <li><a href="#sec-historia">1. Historia</a></li>
-                    <li><a href="#sec-mexico">1.1 Impacto en México</a></li>
-                    <li><a href="#sec-f1">1.2 Evolución en F1</a></li>
-                    <li><a href="#sec-reduccion">2. Reducción de Cilindros</a></li>
-                </ul>
-            </div>
+        <div class="book-tip">
+            📖 <strong>Libro Interactivo:</strong> Toca la página derecha para avanzar o la página izquierda para retroceder (también con flechas del teclado).
+        </div>
 
-            <div class="sidebar-panel">
-                <span class="sidebar-title">Ficha Técnica</span>
-                <div class="sidebar-meta">
-                    <strong>Carrera:</strong>
-                    <span>Ingeniería Automotriz</span>
-                    <br><br>
-                    <strong>Autores:</strong>
-                    <span>Estu, Pido, Gato Wey</span>
-                    <br><br>
-                    <strong>Tema:</strong>
-                    <span>Motores Atmosféricos vs Híbridos en F1</span>
+        <div class="book-wrapper">
+            <div class="book-cover">
+                <div class="book-pages-stack">
+                    
+                    <!-- Open Book Container -->
+                    <div class="book-spread" id="book-spread">
+                        
+                        <!-- Left Page Container -->
+                        <div class="book-page book-page-left" id="page-left" onclick="prevSpread()" title="Haz clic para retroceder">
+                            <div id="content-left">
+                                <!-- Dynamic Left Page Content Injected by JS -->
+                            </div>
+                            <div class="page-num">
+                                <span id="num-left">Página 1</span>
+                                <span class="page-click-hint">← Toca para retroceder</span>
+                            </div>
+                        </div>
+
+                        <!-- Central Spine Valley Shadow -->
+                        <div class="book-spine-shadow"></div>
+
+                        <!-- Ribbon Bookmark Hanging Down -->
+                        <div class="book-ribbon"></div>
+
+                        <!-- Right Page Container -->
+                        <div class="book-page book-page-right" id="page-right" onclick="nextSpread()" title="Haz clic para avanzar">
+                            <div id="content-right">
+                                <!-- Dynamic Right Page Content Injected by JS -->
+                            </div>
+                            <div class="page-num">
+                                <span class="page-click-hint">Toca para avanzar →</span>
+                                <span id="num-right">Página 2</span>
+                            </div>
+                        </div>
+
+                    </div>
+
                 </div>
             </div>
-        </aside>
+        </div>
 
-        <!-- ═ Right Document Reader Body ═ -->
-        <article class="tesis-reader" id="doc-article">
+        <!-- Controls Below Book -->
+        <div class="book-controls">
+            <button class="ctrl-btn" id="btn-prev" onclick="prevSpread()" disabled>
+                ← Página Anterior
+            </button>
+            <span class="spread-indicator" id="spread-indicator">
+                Páginas 1 – 2 de 8
+            </span>
+            <button class="ctrl-btn" id="btn-next" onclick="nextSpread()">
+                Página Siguiente →
+            </button>
+        </div>
 
-            <!-- ── PÁGINA 1: PORTADA ── -->
-            <section class="doc-page doc-cover" id="sec-portada">
-                <span class="doc-page-badge">Página 1 / 8</span>
-                <div class="cover-faculty">Ingeniería Automotriz</div>
-                <h1 class="cover-title">
-                    Retorno a los motores atmosféricos de alta cilindrada con combustibles sostenibles y materiales de menor impacto
-                </h1>
-                <div class="cover-authors-block">
-                    <span>Presentado por:</span>
-                    <div class="cover-authors">Estu, Pido, Gato Wey</div>
-                </div>
-            </section>
+        <!-- Direct Page Jumpers -->
+        <div class="spread-pills">
+            <button class="pill-btn active" onclick="goToSpread(0)">Páginas 1 – 2 (Portada / Intro)</button>
+            <button class="pill-btn" onclick="goToSpread(1)">Páginas 3 – 4 (Historia / México)</button>
+            <button class="pill-btn" onclick="goToSpread(2)">Páginas 5 – 6 (Decretos / F1)</button>
+            <button class="pill-btn" onclick="goToSpread(3)">Páginas 7 – 8 (Carbono / Reducción)</button>
+        </div>
 
-            <!-- ── PÁGINA 2: INTRODUCCIÓN ── -->
-            <section class="doc-page" id="sec-intro">
-                <span class="doc-page-badge">Página 2 / 8</span>
-                <h2 class="doc-h1">Introducción</h2>
-                <p class="doc-p">
-                    La ingeniería automotriz se encarga de diseñar, desarrollar e implementar soluciones en transportes terrestres autopropulsados por motores de combustión, eléctricos y alternativos. Esta ingeniería se ramifica ya que podemos encontrar distintas disciplinas aplicadas en diferentes problemáticas a solucionar y así mismo combina principios de ingeniería mecánica, eléctrica, de materiales, de control y de software para crear vehículos que cumplan con los requisitos regulatorios, de rendimiento, seguridad, eficiencia, comodidad y regulaciones.
-                </p>
-                <p class="doc-p">
-                    Por mencionar algunos ejemplos fundamentales:
-                </p>
+    </main>
 
-                <div class="doc-bullets">
-                    <div class="bullet-item">
-                        <strong>Diseño y estilo del vehículo:</strong>
-                        Embalaje, ergonomía, aerodinámica, diseño del chasis, estructuras de la carrocería y consideraciones de resistencia a choques.
-                    </div>
-                    <div class="bullet-item">
-                        <strong>Ingeniería de sistemas de propulsión:</strong>
-                        Motores de combustión interna, sistemas híbridos, motores eléctricos, transmisiones, sistemas de propulsión, sistemas de combustible, gestión térmica y control de emisiones.
-                    </div>
-                    <div class="bullet-item">
-                        <strong>Electrónica y controles automotrices:</strong>
-                        Unidades de control electrónico (ECU), sensores, actuadores, redes de vehículos (CAN, LIN, FlexRay, Ethernet), software integrado, controladores de motores, ADAS (sistemas avanzados de asistencia al conductor).
-                    </div>
-                    <div class="bullet-item">
-                        <strong>Chasis y dinámica:</strong>
-                        Suspensión, dirección, sistemas de frenos, neumáticos, ajuste de marcha y manejo, NVH (ruido, vibración, aspereza).
-                    </div>
-                    <div class="bullet-item">
-                        <strong>Materiales y fabricación:</strong>
-                        Selección de aceros, aluminio, composites, plásticos; estampación, fundición, unión (soldadura, adhesivos), procesos de cadena de montaje y control de calidad.
-                    </div>
-                    <div class="bullet-item">
-                        <strong>Ingeniería de seguridad y accidentes:</strong>
-                        Seguridad pasiva (restricciones, airbags, zonas de deformación), seguridad activa (control de estabilidad, ABS), simulación y pruebas de accidentes, cumplimiento normativo.
-                    </div>
-                    <div class="bullet-item">
-                        <strong>Electrónica del vehículo, infoentretenimiento y conectividad:</strong>
-                        Interfaz hombre–máquina, telemática, ciberseguridad, comunicación V2X.
-                    </div>
-                    <div class="bullet-item">
-                        <strong>Pruebas, validación y homologación:</strong>
-                        Pruebas de componentes y vehículos completos en laboratorios y en pista, durabilidad, pruebas ambientales, certificación de emisiones y seguridad.
-                    </div>
-                </div>
+    <!-- ═ Footer ═ -->
+    <footer class="site-footer">
+        <span class="footer-logo">FORMULA 1</span>
+        <span class="footer-copy">Proyecto de Titulación · Universidad ETAC</span>
+        <a href="motores.html" class="footer-link">Explorar Motores 3D →</a>
+    </footer>
 
-                <div class="doc-source">
-                    Fuente de consulta: <a href="https://www.quora.com/What-is-automobile-engineering" target="_blank" rel="noopener">quora.com/What-is-automobile-engineering</a>
-                </div>
-            </section>
+    <!-- ═ Raw Exact Document Pages Data ═ -->
+    <script>
+        // Array containing the EXACT unaltered content of each of the 8 pages of the user's thesis
+        const pages = [
+            // ── PÁGINA 1: PORTADA ──
+            {
+                num: 1,
+                html: `
+                    <div class="doc-faculty-cover">INGENIERÍA AUTOMOTRIZ</div>
+                    <div class="doc-title-cover">
+                        Retorno a los motores atmosféricos de alta cilindrada con combustibles sostenibles y materiales de menor impacto
+                    </div>
+                    <div class="doc-author-cover">
+                        Presentado por: Estu, Pido, Gato Wey
+                    </div>
+                `
+            },
 
-            <!-- ── PÁGINA 3: HISTORIA ── -->
-            <section class="doc-page" id="sec-historia">
-                <span class="doc-page-badge">Página 3 / 8</span>
-                <h2 class="doc-h1">1. Historia</h2>
-                <p class="doc-p">
-                    En el siglo XIX, Gottlieb Daimler, Karl Benz, Nicolaus Otto y Emile Levassor contribuyeron significativamente al avance tecnológico del automóvil. A Benz se le atribuye la construcción del primer automóvil a gasolina con motor de combustión interna en 1885, lo que marcó un hito histórico en la industria automotriz.
-                </p>
-                <p class="doc-p">
-                    Henry Ford fundó la Ford Motor Company, un fabricante de automóviles estadounidense que transformó la industria con métodos de producción en masa. Estos métodos fueron adoptados posteriormente por otras importantes empresas automovilísticas como GM y Chrysler. A medida que la industria automotriz se expandió, se crearon varias cadenas de suministro para sostener la producción y el progreso de los vehículos.
-                </p>
-                <p class="doc-p">
-                    La industria automotriz jugó un papel vital en el ejército al producir vehículos de guerra y otros productos esenciales para la guerra. Después de la Segunda Guerra Mundial, la industria automotriz creció rápidamente en regiones globales como Europa y Japón. En 1980, con estrategias de marketing intensivas y carreteras y autopistas recientemente desarrolladas, los fabricantes de automóviles se habían convertido en una empresa global.
-                </p>
-                <p class="doc-p">
-                    Aunque la industria automotriz ha cambiado a lo largo de los siglos, continúa prosperando y creciendo con constantes innovaciones de productos, nuevos diseños de ingeniería y tecnología. Ahora que los vehículos son totalmente eléctricos, los coches son más pequeños, menos contaminantes y más asistidos por ordenador.
-                </p>
-                <div class="doc-source">
-                    Fuente de consulta: <a href="https://guides.loc.gov/automotive-industry/history" target="_blank" rel="noopener">guides.loc.gov/automotive-industry/history</a>
-                </div>
-            </section>
+            // ── PÁGINA 2: INTRODUCCIÓN ──
+            {
+                num: 2,
+                html: `
+                    <h1 class="doc-h1">Introducción</h1>
+                    <p class="doc-p">
+                        La ingeniería automotriz se encarga de diseñar, desarrollar e implementar soluciones en transportes terrestres autopropulsados por motores de combustión, eléctricos y alternativos. Esta ingeniería se ramifica ya que podemos encontrar distintas disciplinas aplicadas en diferentes problemáticas a solucionar y así mismo combina principios de ingeniería mecánica, eléctrica, de materiales, de control y de software para crear vehículos que cumplan con los requisitos regulatorios, de rendimiento, seguridad, eficiencia, comodidad y regulaciones.
+                    </p>
+                    <p class="doc-p" style="margin-bottom:6px;">Por mencionar algunos ejemplos:</p>
+                    <ul class="doc-list">
+                        <li><strong>Diseño y estilo del vehículo:</strong> embalaje, ergonomía, aerodinámica, diseño del chasis, estructuras de la carrocería y consideraciones de resistencia a choques.</li>
+                        <li><strong>Ingeniería de sistemas de propulsión:</strong> motores de combustión interna, sistemas híbridos, motores eléctricos, transmisiones, sistemas de propulsión, sistemas de combustible, gestión térmica y control de emisiones.</li>
+                        <li><strong>Electrónica y controles automotrices:</strong> unidades de control electrónico (ECU), sensores, actuadores, redes de vehículos (CAN, LIN, FlexRay, Ethernet), software integrado, controladores de motores, ADAS (sistemas avanzados de asistencia al conductor).</li>
+                        <li><strong>Chasis y dinámica:</strong> suspensión, dirección, sistemas de frenos, neumáticos, ajuste de marcha y manejo, NVH (ruido, vibración, aspereza).</li>
+                        <li><strong>Materiales y fabricación:</strong> selección de aceros, aluminio, composites, plásticos; estampación, fundición, unión (soldadura, adhesivos), procesos de cadena de montaje y control de calidad.</li>
+                        <li><strong>Ingeniería de seguridad y accidentes:</strong> seguridad pasiva (restricciones, airbags, zonas de deformación), seguridad activa (control de estabilidad, ABS), simulación y pruebas de accidentes, cumplimiento normativo.</li>
+                        <li><strong>Electrónica del vehículo, infoentretenimiento y conectividad:</strong> interfaz hombre–máquina, telemática, ciberseguridad, comunicación V2X.</li>
+                        <li><strong>Pruebas, validación y homologación:</strong> pruebas de componentes y vehículos completos en laboratorios y en pista, durabilidad, pruebas ambientales, certificación de emisiones y seguridad.</li>
+                    </ul>
+                    <a href="https://www.quora.com/What-is-automobile-engineering" target="_blank" class="doc-url">https://www.quora.com/What-is-automobile-engineering</a>
+                `
+            },
 
-            <!-- ── PÁGINAS 4 Y 5: ORIGEN Y GRAN IMPACTO EN MÉXICO ── -->
-            <section class="doc-page" id="sec-mexico">
-                <span class="doc-page-badge">Páginas 4 y 5 / 8</span>
-                <h2 class="doc-h1">1.1 Origen y el gran impacto en nuestro país</h2>
-                <p class="doc-p">
-                    La importancia de la industria automotriz en México se explica por su aportación a la producción, la manufactura y el comercio exterior. Además, su actividad impulsa a proveedores de autopartes, materiales, maquinaria, logística, ingeniería y mantenimiento industrial.
-                </p>
-                <p class="doc-p">
-                    De acuerdo con el INEGI, en 2023 la industria automotriz representó <strong>4.6% del producto interno bruto nacional</strong> y <strong>21.7% del PIB manufacturero</strong>. Por otra parte, los registros correspondientes a 2025 muestran que el país produjo más de <strong>3.9 millones de vehículos ligeros</strong> y exportó más de <strong>3.3 millones</strong>.
-                </p>
+            // ── PÁGINA 3: HISTORIA ──
+            {
+                num: 3,
+                html: `
+                    <h1 class="doc-h1">1. Historia</h1>
+                    <p class="doc-p">
+                        En el siglo XIX, Gottlieb Daimler, Karl Benz, Nicolaus Otto y Emile Levassor contribuyeron significativamente al avance tecnológico del automóvil. A Benz se le atribuye la construcción del primer automóvil a gasolina con motor de combustión interna en 1885, lo que marcó un hito histórico en la industria automotriz.
+                    </p>
+                    <p class="doc-p">
+                        Henry Ford fundó la Ford Motor Company, un fabricante de automóviles estadounidense que transformó la industria con métodos de producción en masa. Estos métodos fueron adoptados posteriormente por otras importantes empresas automovilísticas como GM y Chrysler. A medida que la industria automotriz se expandió, se crearon varias cadenas de suministro para sostener la producción y el progreso de los vehículos.
+                    </p>
+                    <p class="doc-p">
+                        La industria automotriz jugó un papel vital en el ejército al producir vehículos de guerra y otros productos esenciales para la guerra. Después de la Segunda Guerra Mundial, la industria automotriz creció rápidamente en regiones globales como Europa y Japón. En 1980, con estrategias de marketing intensivas y carreteras y autopistas recientemente desarrolladas, los fabricantes de automóviles se habían convertido en una empresa global.
+                    </p>
+                    <p class="doc-p">
+                        Aunque la industria automotriz ha cambiado a lo largo de los siglos, continúa prosperando y creciendo con constantes innovaciones de productos, nuevos diseños de ingeniería y tecnología. Ahora que los vehículos son totalmente eléctricos, los coches son más pequeños, menos contaminantes y más asistidos por ordenador.
+                    </p>
+                    <a href="https://guides.loc.gov/automotive-industry/history" target="_blank" class="doc-url">https://guides.loc.gov/automotive-industry/history</a>
+                `
+            },
 
-                <!-- Tabla Estadística Oficial -->
-                <div class="doc-table-wrap">
-                    <table class="doc-table">
+            // ── PÁGINA 4: ORIGEN Y GRAN IMPACTO EN MÉXICO ──
+            {
+                num: 4,
+                html: `
+                    <h1 class="doc-h1">1.1 Origen y el gran impacto en nuestro país</h1>
+                    <p class="doc-p">
+                        La importancia de la industria automotriz en México se explica por su aportación a la producción, la manufactura y el comercio exterior. Además, su actividad impulsa a proveedores de autopartes, materiales, maquinaria, logística, ingeniería y mantenimiento industrial.
+                    </p>
+                    <p class="doc-p">
+                        De acuerdo con el INEGI, en 2023 la industria automotriz representó 4.6% del producto interno bruto nacional y 21.7% del PIB manufacturero. Por otra parte, los registros correspondientes a 2025 muestran que el país produjo más de 3.9 millones de vehículos ligeros y exportó más de 3.3 millones.
+                    </p>
+                    <table class="pdf-table">
                         <thead>
                             <tr>
                                 <th>Indicador</th>
@@ -657,187 +670,228 @@
                         <tbody>
                             <tr>
                                 <td>Participación en el PIB nacional</td>
-                                <td class="table-cifra">4.6%</td>
+                                <td>4.6%</td>
                                 <td>2023</td>
                             </tr>
                             <tr>
                                 <td>Participación en el PIB manufacturero</td>
-                                <td class="table-cifra">21.7%</td>
+                                <td>21.7%</td>
                                 <td>2023</td>
                             </tr>
                             <tr>
                                 <td>Producción de vehículos ligeros</td>
-                                <td class="table-cifra">3,953,494 unidades</td>
+                                <td>3,953,494 unidades</td>
                                 <td>2025</td>
                             </tr>
                             <tr>
                                 <td>Exportación de vehículos ligeros</td>
-                                <td class="table-cifra">3,385,785 unidades</td>
+                                <td>3,385,785 unidades</td>
                                 <td>2025</td>
                             </tr>
                             <tr>
                                 <td>Venta de vehículos ligeros en el mercado interno</td>
-                                <td class="table-cifra">1,524,638 unidades</td>
+                                <td>1,524,638 unidades</td>
                                 <td>2025</td>
                             </tr>
                         </tbody>
                     </table>
-                </div>
+                    <p class="doc-p">
+                        La historia de la industria automotriz en México comenzó con operaciones de ensamble destinadas principalmente al mercado nacional. Sin embargo, las políticas industriales, la apertura comercial y la integración con Norteamérica transformaron al país en una plataforma de manufactura y exportación.
+                    </p>
+                    <p class="doc-p">
+                        <strong>1925:</strong> Ford inició operaciones de ensamble en México. Este acontecimiento marcó el establecimiento formal de la producción automotriz en el país.
+                    </p>
+                    <p class="doc-p">
+                        <strong>Década de 1930:</strong> General Motors y Automex, empresa que posteriormente se relacionaría con Chrysler, instalaron operaciones de montaje. Por consiguiente, aumentó la presencia de fabricantes extranjeros.
+                    </p>
+                `
+            },
 
-                <h3 class="doc-h2">Evolución Histórica de la Industria en México</h3>
-                <p class="doc-p">
-                    La historia de la industria automotriz en México comenzó con operaciones de ensamble destinadas principalmente al mercado nacional. Sin embargo, las políticas industriales, la apertura comercial y la integración con Norteamérica transformaron al país en una plataforma de manufactura y exportación:
-                </p>
+            // ── PÁGINA 5: DECRETOS Y T-MEC ──
+            {
+                num: 5,
+                html: `
+                    <p class="doc-p">
+                        <strong>1962:</strong> el gobierno mexicano publicó el primer Decreto Automotriz. Esta política limitó la importación de vehículos terminados y exigió una mayor incorporación de componentes nacionales. Como resultado, crecieron la fabricación local y la red de proveedores.
+                    </p>
+                    <p class="doc-p">
+                        <strong>Décadas de 1970 y 1980:</strong> nuevos decretos buscaron desarrollar la producción de autopartes y equilibrar el comercio del sector. Posteriormente, el ingreso de México al Acuerdo General sobre Aranceles Aduaneros y Comercio en 1986 aceleró la apertura económica.
+                    </p>
+                    <p class="doc-p">
+                        <strong>1994:</strong> la entrada en vigor del Tratado de Libre Comercio de América del Norte fortaleció la integración productiva entre México, Estados Unidos y Canadá. A partir de entonces, las armadoras y sus proveedores distribuyeron distintas etapas de producción entre los tres países.
+                    </p>
+                    <p class="doc-p">
+                        <strong>Décadas de 2000 y 2010:</strong> varias empresas ampliaron plantas o instalaron nuevas operaciones. En consecuencia, crecieron los clústeres automotrices del norte, el Bajío y el centro de México.
+                    </p>
+                    <p class="doc-p">
+                        <strong>2020:</strong> el T-MEC sustituyó al TLCAN e introdujo nuevas reglas de origen, disposiciones laborales y requisitos para el comercio regional de vehículos y autopartes.
+                    </p>
+                    <p class="doc-p">
+                        Actualmente, la industria atraviesa otra etapa de transformación. La electrificación, la automatización, los vehículos conectados y la reducción de emisiones están modificando los procesos de diseño, fabricación y mantenimiento. Por ello, México necesita fortalecer a sus proveedores, desarrollar personal especializado y aumentar su participación en actividades de ingeniería y tecnología.
+                    </p>
+                    <a href="https://pomok.com.mx/industria-automotriz-en-mexico/" target="_blank" class="doc-url">https://pomok.com.mx/industria-automotriz-en-mexico/</a>
+                `
+            },
 
-                <div class="timeline-wrap">
-                    <div class="timeline-node">
-                        <div class="timeline-year">1925 — Inicio Formal</div>
-                        <div class="timeline-desc">Ford inició operaciones de ensamble en México. Este acontecimiento marcó el establecimiento formal de la producción automotriz en el país.</div>
-                    </div>
-                    <div class="timeline-node">
-                        <div class="timeline-year">Década de 1930 — Consolidación</div>
-                        <div class="timeline-desc">General Motors y Automex, empresa que posteriormente se relacionaría con Chrysler, instalaron operaciones de montaje, aumentando la presencia de fabricantes extranjeros.</div>
-                    </div>
-                    <div class="timeline-node">
-                        <div class="timeline-year">1962 — Primer Decreto Automotriz</div>
-                        <div class="timeline-desc">El gobierno mexicano publicó el primer Decreto Automotriz. Esta política limitó la importación de vehículos terminados y exigió una mayor incorporación de componentes nacionales, detonando la fabricación local y la red de proveedores.</div>
-                    </div>
-                    <div class="timeline-node">
-                        <div class="timeline-year">Décadas de 1970 y 1980 — Apertura Económica</div>
-                        <div class="timeline-desc">Nuevos decretos buscaron desarrollar la producción de autopartes y equilibrar el comercio. El ingreso de México al Acuerdo General sobre Aranceles Aduaneros y Comercio (GATT) en 1986 aceleró la apertura económica.</div>
-                    </div>
-                    <div class="timeline-node">
-                        <div class="timeline-year">1994 — Integración con TLCAN</div>
-                        <div class="timeline-desc">La entrada en vigor del Tratado de Libre Comercio de América del Norte fortaleció la integración productiva entre México, Estados Unidos y Canadá. Las armadoras distribuyeron distintas etapas de producción entre los tres países.</div>
-                    </div>
-                    <div class="timeline-node">
-                        <div class="timeline-year">Décadas de 2000 y 2010 — Clústeres Automotrices</div>
-                        <div class="timeline-desc">Varias empresas ampliaron plantas e instalaron nuevas operaciones, consolidando los clústeres automotrices del norte, el Bajío y el centro de México.</div>
-                    </div>
-                    <div class="timeline-node">
-                        <div class="timeline-year">2020 — Entrada del T-MEC</div>
-                        <div class="timeline-desc">El T-MEC sustituyó al TLCAN e introdujo nuevas reglas de origen, disposiciones laborales y requisitos para el comercio regional de vehículos y autopartes.</div>
-                    </div>
-                </div>
+            // ── PÁGINA 6: EVOLUCIÓN EN F1 ──
+            {
+                num: 6,
+                html: `
+                    <h1 class="doc-h1">1.2 Evolución y aplicaciones en vehículos de alto rendimiento</h1>
+                    <p class="doc-p">
+                        Dicen que la primera carrera de autos se dio cuando se encontraron dos vehículos en el mismo camino. Sí, la historia del automovilismo es tan antigua como el mismo automóvil.
+                    </p>
+                    <p class="doc-p">
+                        Conforme las armadoras comenzaron a crear distintos motores, nacieron intrépidos pilotos que, ayudados por sus amigos mecánicos, modificaban sus autos para hacerlos más veloces. Así, surgieron innumerables carreras de todo tipo, siendo las más populares las de ruta, generalmente de un poblado a otro.
+                    </p>
+                    <p class="doc-p">
+                        Fue hasta 1950 y tras el crecimiento del automovilismo en autódromos y con carreras de gran importancia, que se organizó el primer campeonato mundial de Fórmula 1. A diferencia de la actualidad, el reglamento de competencia permitía varios tamaños y especificaciones de motor, yendo desde el 1.5 litros, hasta el 4.5 litros, lo que permitía que muchos equipos y pilotos aspiraran a ser parte de la serie.
+                    </p>
+                    <p class="doc-p">
+                        Esos primeros autos de la máxima categoría tenían los motores en la parte frontal del auto (bajo el cofre, delante del piloto) y dependiendo la cilindrada daban entre 350 y 400 caballos de fuerza, aunque el mayor peligro se daba por lo angosto de las ruedas, pues la zona de contacto con el asfalto era casi inexistente, lo que hacía que la fuerza y pericia de los pilotos saliera a flote.
+                    </p>
+                    <p class="doc-p">
+                        Las medidas de seguridad eran las mínimas, pues no existían los cinturones de seguridad, traje anti fuego o incluso casco. El piloto estaba expuesto desde la cintura, y tener una volcadura podía ser (y en muchos casos lo era) mortal.
+                    </p>
+                    <p class="doc-p">
+                        Durante 1952 se corrió con la reglamentación de motor combinada, con las reglas de los Formula 2, pues con la salida de Alfa Romeo nadie cubría con las especificaciones de la Formula 1. Así teníamos motores de 2 y 2.5 litros, con menos caballaje (unos 200, en promedio).
+                    </p>
+                    <p class="doc-p">
+                        Fue hasta 1954 cuando se cambió la normativa, para tener motores 750 cc con compresor o 2.5 litros. Mercedes fabricó el W196, un auto icónico en la Formula 1 pues tenía las llantas cubiertas, lo que significó la gran excepción al espíritu de los autos “formula” o de neumáticos descubiertos.
+                    </p>
+                `
+            },
 
-                <p class="doc-p">
-                    Actualmente, la industria atraviesa otra etapa de transformación. La electrificación, la automatización, los vehículos conectados y la reducción de emisiones están modificando los procesos de diseño, fabricación y mantenimiento. Por ello, México necesita fortalecer a sus proveedores, desarrollar personal especializado y aumentar su participación en actividades de ingeniería y tecnología.
-                </p>
+            // ── PÁGINA 7: MOTOR TRASERO Y CARBONO ──
+            {
+                num: 7,
+                html: `
+                    <h2 class="doc-h2">Motor trasero, primer gran cambio</h2>
+                    <p class="doc-p">
+                        Y aunque ese cambio fue meramente estético, fue el equipo Cooper el que dio un salto abismal en cuanto a tecnología, cuando en 1958, montó el motor Climax en la parte trasera, detrás del piloto. Sir Stirling Moss ganó el Gran Premio de Argentina y su coequipero Maurice Trintignant el de Mónaco, lo que hizo que las demás escuderías vieran el beneficio de la nueva configuración.
+                    </p>
+                    <h2 class="doc-h2">Material revolucionario: Carbono</h2>
+                    <p class="doc-p">
+                        En 1981 se implementó un elemento que continuó la revolución no sólo en lo deportivo, sino en materia de seguridad, la fibra de carbono. McLaren fue el primer equipo en presentar un chasis enteramente de ese material. No sólo era más ligero, sino que protegía de mejor manera a los pilotos. Pronto sería un estándar en la categoría.
+                    </p>
+                    <p class="doc-p">
+                        Aunque no hubo cambios en la regulación de cilindrada, para 1984 y 1985 se estipuló un consumo máximo de 220 litros, lo que ayudó a crear motores más eficientes.
+                    </p>
+                    <p class="doc-p">
+                        Para 1986 el consumo bajó a 195 litros como máximo y se olvidaron los motores normalmente aspirados.
+                    </p>
+                    <p class="doc-p">
+                        Con ello tendríamos nuevas reglas para 1987: los motores turbo serían de 1.5 litros, máximo; y para aquellos equipos que no abrazaron al turbo, podrían competir con un 3500 cc, con libre consumo, sin reposte.
+                    </p>
+                    <p class="doc-p">
+                        En 1989 llegó la prohibición para los turbos. Todos los motores serían normalmente aspirados, con cilindradas que iban de los 3500 cc a los 3000 cc, dependiendo la temporada, hasta 2005.
+                    </p>
+                    <a href="https://www.mexicogp.mx/noticia/formula-1-una-historia-de-evolucion-tecnologica/" target="_blank" class="doc-url">https://www.mexicogp.mx/noticia/formula-1-una-historia-de-evolucion-tecnologica/</a>
+                `
+            },
 
-                <div class="doc-source">
-                    Fuente de consulta: <a href="https://pomok.com.mx/industria-automotriz-en-mexico/" target="_blank" rel="noopener">pomok.com.mx/industria-automotriz-en-mexico/</a>
-                </div>
-            </section>
+            // ── PÁGINA 8: REDUCCIÓN DE CILINDROS ──
+            {
+                num: 8,
+                html: `
+                    <h1 class="doc-h1">2. Reducción de cilindros</h1>
+                    <p class="doc-p">
+                        Fue en 2006 cuando la FIA decidió decir adiós a los enormes y poderosos motores V10 e introdujeron V8 de 2.4 litros, por lo que los ingenieros tuvieron que crear alerones curvos que permitieran mucho mayor carga.
+                    </p>
+                    <p class="doc-p">
+                        Se presentó un caso muy parecido a lo vivido en 1970 y se presentaron alerones de todos los tamaños y en todas partes del monoplaza.
+                    </p>
+                    <p class="doc-p">
+                        Fue tal la importancia de la aerodinámica, que en 2009 se presentó un nuevo reglamento que obligaba a tener un ala delantera más grande y una trasera reducida. Regresaron los neumáticos lisos y algunos equipos implementaron el “KERS”, un sistema de recuperación de energía.
+                    </p>
+                    <p class="doc-p">
+                        En pro del espectáculo, en 2011 se implementó el DRS o alerón trasero móvil, que permite que un auto que se coloca detrás de otro con el cual pelea posición, pueda “abrir” su alerón trasero. Al no ofrecer resistencia, aumenta la posibilidad de rebase.
+                    </p>
+                    <p class="doc-p">
+                        Para 2013 se hizo obligatorio el KERS (que había sido prohibido en 2010 y 2011), un adelanto que revolucionó la industria automotriz en su conjunto, al ofrecer recuperación energética, un paso fundamental para la tecnología híbrida.
+                    </p>
+                    <p class="doc-p">
+                        Y así es como llegamos a 2014 y la implementación de los motores híbridos, ahora con un eficiente y pequeña fuente de poder de 1.6 litros, turbocargado; recuperación kinética y de energía térmica.
+                    </p>
+                    <p class="doc-p">
+                        Pero no puso fin a las regulaciones, pues en 2017 se permitieron monoplazas más anchos, un alerón trasero más grande y neumáticos de mayor tamaño (más agarre).
+                    </p>
+                    <a href="https://www.mexicogp.mx/noticia/formula-1-una-historia-de-evolucion-tecnologica/" target="_blank" class="doc-url">https://www.mexicogp.mx/noticia/formula-1-una-historia-de-evolucion-tecnologica/</a>
+                `
+            }
+        ];
 
-            <!-- ── PÁGINAS 6 Y 7: EVOLUCIÓN EN F1 Y ALTO RENDIMIENTO ── -->
-            <section class="doc-page" id="sec-f1">
-                <span class="doc-page-badge">Páginas 6 y 7 / 8</span>
-                <h2 class="doc-h1">1.2 Evolución y aplicaciones en vehículos de alto rendimiento</h2>
-                <p class="doc-p">
-                    Dicen que la primera carrera de autos se dio cuando se encontraron dos vehículos en el mismo camino. Sí, la historia del automovilismo es tan antigua como el mismo automóvil.
-                </p>
-                <p class="doc-p">
-                    Conforme las armadoras comenzaron a crear distintos motores, nacieron intrépidos pilotos que, ayudados por sus amigos mecánicos, modificaban sus autos para hacerlos más veloces. Así, surgieron innumerables carreras de todo tipo, siendo las más populares las de ruta, generalmente de un poblado a otro.
-                </p>
-                <p class="doc-p">
-                    Fue hasta 1950 y tras el crecimiento del automovilismo en autódromos y con carreras de gran importancia, que se organizó el primer campeonato mundial de Fórmula 1. A diferencia de la actualidad, el reglamento de competencia permitía varios tamaños y especificaciones de motor, yendo desde el 1.5 litros, hasta el 4.5 litros, lo que permitía que muchos equipos y pilotos aspiraran a ser parte de la serie.
-                </p>
-                <p class="doc-p">
-                    Esos primeros autos de la máxima categoría tenían los motores en la parte frontal del auto (bajo el cofre, delante del piloto) y dependiendo la cilindrada daban entre 350 y 400 caballos de fuerza, aunque el mayor peligro se daba por lo angosto de las ruedas, pues la zona de contacto con el asfalto era casi inexistente, lo que hacía que la fuerza y pericia de los pilotos saliera a flote.
-                </p>
-                <p class="doc-p">
-                    Las medidas de seguridad eran las mínimas, pues no existían los cinturones de seguridad, traje anti fuego o incluso casco. El piloto estaba expuesto desde la cintura, y tener una volcadura podía ser (y en muchos casos lo era) mortal.
-                </p>
-                <p class="doc-p">
-                    Durante 1952 se corrió con la reglamentación de motor combinada, con las reglas de los Formula 2, pues con la salida de Alfa Romeo nadie cubría con las especificaciones de la Formula 1. Así teníamos motores de 2 y 2.5 litros, con menos caballaje (unos 200, en promedio).
-                </p>
-                <p class="doc-p">
-                    Fue hasta 1954 cuando se cambió la normativa, para tener motores 750 cc con compresor o 2.5 litros. Mercedes fabricó el W196, un auto icónico en la Formula 1 pues tenía las llantas cubiertas, lo que significó la gran excepción al espíritu de los autos “formula” o de neumáticos descubiertos.
-                </p>
+        // Book Spread Management (2 pages per spread)
+        let currentSpread = 0;
+        const totalSpreads = 4; // 0: 1-2, 1: 3-4, 2: 5-6, 3: 7-8
 
-                <h3 class="doc-h2">Motor Trasero: El Primer Gran Cambio (1958)</h3>
-                <p class="doc-p">
-                    Y aunque ese cambio fue meramente estético, fue el equipo Cooper el que dio un salto abismal en cuanto a tecnología, cuando en 1958, montó el motor Climax en la parte trasera, detrás del piloto. Sir Stirling Moss ganó el Gran Premio de Argentina y su coequipero Maurice Trintignant el de Mónaco, lo que hizo que las demás escuderías vieran el beneficio de la nueva configuración.
-                </p>
+        function renderSpread() {
+            const leftIndex = currentSpread * 2;
+            const rightIndex = leftIndex + 1;
 
-                <h3 class="doc-h2">Material Revolucionario: La Fibra de Carbono (1981)</h3>
-                <p class="doc-p">
-                    En 1981 se implementó un elemento que continuó la revolución no sólo en lo deportivo, sino en materia de seguridad, la fibra de carbono. McLaren fue el primer equipo en presentar un chasis enteramente de ese material. No sólo era más ligero, sino que protegía de mejor manera a los pilotos. Pronto sería un estándar en la categoría.
-                </p>
-                <p class="doc-p">
-                    Aunque no hubo cambios en la regulación de cilindrada, para 1984 y 1985 se estipuló un consumo máximo de 220 litros, lo que ayudó a crear motores más eficientes. Para 1986 el consumo bajó a 195 litros como máximo y se olvidaron los motores normalmente aspirados.
-                </p>
-                <p class="doc-p">
-                    Con ello tendríamos nuevas reglas para 1987: los motores turbo serían de 1.5 litros, máximo; y para aquellos equipos que no abrazaron al turbo, podrían competir con un 3500 cc, con libre consumo, sin reposte. En 1989 llegó la prohibición para los turbos. Todos los motores serían normalmente aspirados, con cilindradas que iban de los 3500 cc a los 3000 cc, dependiendo la temporada, hasta 2005.
-                </p>
+            const pLeft = pages[leftIndex];
+            const pRight = pages[rightIndex];
 
-                <div class="doc-source">
-                    Fuente de consulta: <a href="https://www.mexicogp.mx/noticia/formula-1-una-historia-de-evolucion-tecnologica/" target="_blank" rel="noopener">mexicogp.mx/noticia/formula-1-una-historia-de-evolucion-tecnologica/</a>
-                </div>
-            </section>
+            // Update Left Page
+            document.getElementById('content-left').innerHTML = pLeft ? pLeft.html : '';
+            document.getElementById('num-left').textContent = pLeft ? `Página ${pLeft.num}` : '';
 
-            <!-- ── PÁGINA 8: REDUCCIÓN DE CILINDROS ── -->
-            <section class="doc-page" id="sec-reduccion">
-                <span class="doc-page-badge">Página 8 / 8</span>
-                <h2 class="doc-h1">2. Reducción de cilindros</h2>
-                <p class="doc-p">
-                    Fue en 2006 cuando la FIA decidió decir adiós a los enormes y poderosos motores V10 e introdujeron V8 de 2.4 litros, por lo que los ingenieros tuvieron que crear alerones curvos que permitieran mucho mayor carga.
-                </p>
-                <p class="doc-p">
-                    Se presentó un caso muy parecido a lo vivido en 1970 y se presentaron alerones de todos los tamaños y en todas partes del monoplaza. Fue tal la importancia de la aerodinámica, que en 2009 se presentó un nuevo reglamento que obligaba a tener un ala delantera más grande y una trasera reducida. Regresaron los neumáticos lisos y algunos equipos implementaron el “KERS”, un sistema de recuperación de energía.
-                </p>
-                <p class="doc-p">
-                    En pro del espectáculo, en 2011 se implementó el DRS o alerón trasero móvil, que permite que un auto que se coloca detrás de otro con el cual pelea posición, pueda “abrir” su alerón trasero. Al no ofrecer resistencia, aumenta la posibilidad de rebase.
-                </p>
-                <p class="doc-p">
-                    Para 2013 se hizo obligatorio el KERS (que había sido prohibido en 2010 y 2011), un adelanto que revolucionó la industria automotriz en su conjunto, al ofrecer recuperación energética, un paso fundamental para la tecnología híbrida.
-                </p>
-                <p class="doc-p">
-                    Y así es como llegamos a 2014 y la implementación de los motores híbridos, ahora con un eficiente y pequeña fuente de poder de 1.6 litros, turbocargado; recuperación kinética y de energía térmica.
-                </p>
-                <p class="doc-p">
-                    Pero no puso fin a las regulaciones, pues en 2017 se permitieron monoplazas más anchos, un alerón trasero más grande y neumáticos de mayor tamaño (más agarre).
-                </p>
+            // Update Right Page
+            document.getElementById('content-right').innerHTML = pRight ? pRight.html : '';
+            document.getElementById('num-right').textContent = pRight ? `Página ${pRight.num}` : '';
 
-                <div class="doc-source">
-                    Fuente de consulta: <a href="https://www.mexicogp.mx/noticia/formula-1-una-historia-de-evolucion-tecnologica/" target="_blank" rel="noopener">mexicogp.mx/noticia/formula-1-una-historia-de-evolucion-tecnologica/</a>
-                </div>
-            </section>
+            // Update Buttons & Indicator
+            document.getElementById('btn-prev').disabled = (currentSpread === 0);
+            document.getElementById('btn-next').disabled = (currentSpread === totalSpreads - 1);
 
-        </article>
-    </main>
+            document.getElementById('spread-indicator').textContent = 
+                `Páginas ${pLeft.num} – ${pRight.num} de ${pages.length}`;
 
-    <!-- ═ Footer ═ -->
-    <footer class="site-footer">
-        <span class="footer-logo">FORMULA 1</span>
-        <span class="footer-copy">Proyecto de Titulación · Universidad ETAC</span>
-        <a href="motores.html" class="footer-link">Explorar Motores 3D →</a>
-    </footer>
-
-    <script>
-        // Reading Progress Bar
-        window.addEventListener('scroll', () => {
-            const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
-            const progress = (window.scrollY / totalHeight) * 100;
-            const pb = document.getElementById('progress-bar');
-            if (pb) pb.style.width = `${Math.min(progress, 100)}%`;
-
-            // Active TOC link detection
-            const sections = document.querySelectorAll('.doc-page');
-            const navLinks = document.querySelectorAll('.sidebar-nav a');
-            let currentSec = '';
-
-            sections.forEach(sec => {
-                const top = sec.offsetTop - 120;
-                if (window.scrollY >= top) {
-                    currentSec = sec.getAttribute('id');
-                }
+            // Update Pills
+            document.querySelectorAll('.pill-btn').forEach((pill, idx) => {
+                pill.classList.toggle('active', idx === currentSpread);
             });
 
-            navLinks.forEach(link => {
-                link.classList.toggle('active', link.getAttribute('href') === `#${currentSec}`);
-            });
+            // Smooth subtle turn animation
+            const spreadEl = document.getElementById('book-spread');
+            spreadEl.style.opacity = '0.7';
+            setTimeout(() => {
+                spreadEl.style.opacity = '1';
+            }, 120);
+        }
+
+        function nextSpread() {
+            if (currentSpread < totalSpreads - 1) {
+                currentSpread++;
+                renderSpread();
+            }
+        }
+
+        function prevSpread() {
+            if (currentSpread > 0) {
+                currentSpread--;
+                renderSpread();
+            }
+        }
+
+        function goToSpread(index) {
+            currentSpread = Math.max(0, Math.min(index, totalSpreads - 1));
+            renderSpread();
+        }
+
+        // Keyboard Navigation (Arrow keys / Space)
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === 'PageDown' || e.key === ' ') {
+                e.preventDefault();
+                nextSpread();
+            } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+                e.preventDefault();
+                prevSpread();
+            }
         });
+
+        // Initialize First Spread on load
+        renderSpread();
     </script>
 </body>
 
