@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Retorno a los Motores Atmosféricos de Alta Cilindrada — Proyecto universitario de Fórmula 1 para la Universidad ETAC / AliatUniversidades. Explora motores 3D interactivos V6, V8, V10 y V12.">
+    <title>Retorno a los Motores Atmosféricos de Alta Cilindrada — Inicio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,700;0,900;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- ═ Loading Overlay ═ -->
+    <div class="loading-overlay" id="loading-overlay">
+        <span class="loading-logo">F1</span>
+        <div class="loading-bar-wrap">
+            <div class="loading-bar" id="loading-bar"></div>
+        </div>
+    </div>
+
+    <!-- ═ Racing Stripe Top ═ -->
+    <div class="racing-stripes"></div>
+
+    <!-- ═ Unified Nav ═ -->
+    <nav class="site-nav">
+        <a href="index.html" class="site-nav-logo">
+            <span class="logo-f">F</span><span class="logo-1">1</span>
+        </a>
+        <ul class="site-nav-links">
+            <li><a href="index.html" class="active">Inicio</a></li>
+            <li><a href="motores.html">Motores 3D</a></li>
+            <li><a href="tesis.html">Tesis</a></li>
+        </ul>
+        <a href="motores.html" class="site-nav-cta">Explorar Motores 3D →</a>
+    </nav>
+
+    <!-- ═ Speed Particles Canvas ═ -->
+    <canvas id="speed-canvas"></canvas>
+
+    <!-- ═ MAIN POSTER PRESENTATION HERO (INICIO) ═ -->
+    <main class="poster-hero-section">
+        
+        <!-- Outer Teal Frame with Rounded Corners -->
+        <div class="poster-frame">
+            <article class="poster-card">
+                
+                <!-- 1. Header Title Block -->
+                <header class="poster-header-block">
+                    <h1 class="poster-main-title">
+                        RETORNO A<br>
+                        LOS MOTORES<br>
+                        ATMOSFÉRICOS DE<br>
+                        ALTA CILINDRADA
+                    </h1>
+                </header>
+
+                <!-- 2. Metadata 3-Column Bar -->
+                <div class="poster-meta-bar">
+                    <div class="poster-meta-cell">
+                        <span>LOREM IPSUM</span>
+                        <span>DOLOR SIT AMET,</span>
+                        <span>CONSECTETUR</span>
+                    </div>
+                    <div class="poster-meta-cell">
+                        <span>LOREM IPSUM</span>
+                        <span>DOLOR SIT AMET,</span>
+                        <span>CONSECTETUR</span>
+                    </div>
+                    <div class="poster-meta-cell poster-logo-cell">
+                        <img src="etac-logo.jpg" alt="Universidad ETAC · AliatUniversidades" class="poster-etac-img">
+                    </div>
+                </div>
+
+                <!-- 3. Main Split Section -->
+                <div class="poster-split-section">
+                    <!-- Left: Race Car Photo from Poster -->
+                    <div class="poster-car-pane">
+                        <img src="f1-car.jpg" alt="Formula 1 monoplaza en circuito a alta velocidad" class="poster-car-img">
+                    </div>
+
+                    <!-- Right: Abstract Editorial Text -->
+                    <div class="poster-text-pane">
+                        <p class="poster-abstract-text">
+                            LOREM IPSUM DOLOR SIT AMET, CONSECTETUR ADIPISCING ELIT, SED DO EIUSMOD TEMPOR INCIDIDUNT UT LABORE ET DOLORE MAGNA ALIQUA. QUIS IPSUM SUSPENDISSE ULTRICES GRAVIDA. RISUS COMMODO VIVERRA MAECENAS ACCUMSAN LACUS VEL FACILISIS.
+                        </p>
+                        <div class="poster-thesis-callout">
+                            <strong>ALGO GUD:</strong> HECHO POR ALGO GUD
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. Bottom Row -->
+                <footer class="poster-bottom-row">
+                    <span class="poster-bottom-label">LOREM IPSUM DOLOR SIT AMET, CONSEC-</span>
+                    <div class="poster-action-buttons">
+                        <a href="motores.html" class="poster-btn poster-btn-primary">⚙ Ver Modelos 3D</a>
+                        <a href="tesis.html" class="poster-btn poster-btn-secondary">📄 Ver Tesis</a>
+                    </div>
+                </footer>
+
+            </article>
+        </div>
+
+        <!-- Companion 4-Engine Quick Preview -->
+        <section class="home-overview-section">
+            <div class="home-eng-card">
+                <span class="hec-badge">2014 – Presente</span>
+                <h3 class="hec-title">V6 Turbo</h3>
+                <p class="hec-spec">1.6L · 1,000+ CV · Híbrido</p>
+                <a href="motores.html#viewer-section" class="hec-link">Ver en 3D →</a>
+            </div>
+
+            <div class="home-eng-card">
+                <span class="hec-badge">2006 – 2013</span>
+                <h3 class="hec-title">V8 Atmosférico</h3>
+                <p class="hec-spec">2.4L · 19,000 RPM · 750 CV</p>
+                <a href="motores.html#viewer-section" class="hec-link">Ver en 3D →</a>
+            </div>
+
+            <div class="home-eng-card">
+                <span class="hec-badge">1995 – 2005</span>
+                <h3 class="hec-title">V10 Atmosférico F1</h3>
+                <p class="hec-spec">3.0L · 18,000 RPM · 900 CV</p>
+                <a href="motores.html#viewer-section" class="hec-link">Ver en 3D →</a>
+            </div>
+
+            <div class="home-eng-card">
+                <span class="hec-badge">1987 – 1995</span>
+                <h3 class="hec-title">V12 Atmosférico F1</h3>
+                <p class="hec-spec">3.5L · 15,000 RPM · 700 CV</p>
+                <a href="motores.html#viewer-section" class="hec-link">Ver en 3D →</a>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ═ Footer ═ -->
+    <footer class="site-footer" style="margin-top:60px;">
+        <span class="footer-logo">UNIVERSIDAD ETAC</span>
+        <span class="footer-copy">AliatUniversidades · Proyecto de Titulación F1</span>
+        <a href="tesis.html" class="footer-link">Ver Documento de Tesis →</a>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

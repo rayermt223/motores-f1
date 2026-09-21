@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Formula 1 — Motores 3D interactivos V6, V8, V10 y V12. Explora la ingeniería de los motores más icónicos de la F1 con modelos animados, corte didáctico y sonido real.">
+    <title>Retorno a los Motores Atmosféricos de Alta Cilindrada</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,700;0,900;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body { background: #0c0c0c; }
+
+        /* ── Hero ── */
+        .motores-hero {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            min-height: 88vh;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .motores-hero::after {
+            content: '';
+            position: absolute; inset: 0;
+            background: radial-gradient(ellipse at 20% 50%, rgba(0,141,142,0.06) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .hero-left {
+            padding: 80px 64px 80px 80px;
+            position: relative; z-index: 2;
+        }
+
+        .hero-eyebrow {
+            display: flex; align-items: center; gap: 12px;
+            margin-bottom: 28px;
+        }
+
+        .hero-eyebrow-line { width: 40px; height: 1.5px; background: var(--teal); }
+        .hero-eyebrow-text {
+            font-family: var(--font-racing);
+            font-size: 0.65rem; letter-spacing: 4px; text-transform: uppercase;
+            color: var(--teal);
+        }
+
+        .hero-title {
+            font-family: var(--font-editorial);
+            font-size: clamp(2.8rem, 4.5vw, 5rem);
+            font-weight: 900; line-height: 1.1;
+            color: var(--white); margin-bottom: 24px;
+        }
+
+        .hero-title em { font-style: italic; color: var(--teal); text-shadow: 0 0 30px rgba(0,141,142,0.3); }
+
+        .hero-desc {
+            font-size: 1rem; font-weight: 300;
+            color: var(--gray-light); line-height: 1.8;
+            max-width: 420px; margin-bottom: 44px;
+        }
+
+        .hero-actions { display: flex; align-items: center; gap: 20px; }
+
+        .btn-editorial {
+            display: inline-flex; align-items: center; gap: 10px;
+            font-family: var(--font-racing);
+            font-size: 0.7rem; letter-spacing: 2px; text-transform: uppercase;
+            padding: 14px 28px;
+            background: var(--teal); color: var(--white); font-weight: 700;
+            border: none; border-radius: 3px;
+            cursor: pointer; transition: all var(--transition-fast);
+            position: relative; overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,141,142,0.3);
+        }
+
+        .btn-editorial::before {
+            content: ''; position: absolute; top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+            transition: left 0.45s;
+        }
+
+        .btn-editorial:hover { transform: translateY(-2px); box-shadow: 0 6px 24px rgba(0,141,142,0.45); background: var(--teal-dark); }
+        .btn-editorial:hover::before { left: 100%; }
+
+        .btn-link-small {
+            font-family: var(--font-racing);
+            font-size: 0.68rem; letter-spacing: 2px; text-transform: uppercase;
+            color: var(--gray-light); display: flex; align-items: center; gap: 6px;
+            transition: color var(--transition-fast);
+        }
+        .btn-link-small:hover { color: var(--white); }
+        .btn-link-small svg { width: 14px; height: 14px; transition: transform var(--transition-fast); }
+        .btn-link-small:hover svg { transform: translateX(4px); }
+
+        .hero-stats {
+            display: flex; gap: 40px;
+            margin-top: 56px; padding-top: 32px;
+            border-top: 1px solid rgba(0,141,142,0.15);
+        }
+
+        .hero-stat-num { font-family: var(--font-racing); font-size: 1.8rem; font-weight: 700; color: var(--teal); line-height: 1; }
+        .hero-stat-label { font-size: 0.72rem; color: var(--gray-light); letter-spacing: 1px; margin-top: 4px; }
+
+        /* Hero right — arch visual */
+        .hero-right {
+            position: relative; height: 88vh;
+            overflow: hidden;
+            display: flex; align-items: center; justify-content: center;
+        }
+
+        .hero-arch-frame {
+            position: relative;
+            width: 460px; height: 580px;
+            border-radius: 230px 230px 0 0;
+            overflow: hidden;
+            border: 1px solid rgba(0,141,142,0.25);
+            box-shadow: 0 0 60px rgba(0,0,0,0.6), 0 0 100px rgba(0,141,142,0.1);
+        }
+
+        .hero-arch-visual {
+            width: 100%; height: 100%;
+            background: linear-gradient(160deg, #072227 0%, #051417 30%, #08282e 60%, #0a0e10 100%);
+            display: flex; align-items: center; justify-content: center;
+            position: relative; overflow: hidden;
+        }
+
+        .hero-arch-visual svg { width: 90%; height: 90%; opacity: 0.85; }
+
+        .hero-badge {
+            position: absolute; bottom: 40px; left: -24px;
+            background: rgba(8,24,28,0.95);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(0,141,142,0.3);
+            border-radius: 8px; padding: 14px 18px;
+            display: flex; align-items: center; gap: 12px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+            min-width: 220px;
+        }
+
+        .hero-badge-icon {
+            width: 36px; height: 36px; border-radius: 50%;
+            background: rgba(0,141,142,0.12); border: 1px solid rgba(0,141,142,0.35);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.1rem; flex-shrink: 0;
+        }
+
+        .hero-badge-text { font-size: 0.78rem; font-weight: 500; color: var(--white); line-height: 1.3; }
+        .hero-badge-sub { font-size: 0.65rem; color: var(--teal); font-family: var(--font-racing); letter-spacing: 1px; margin-top: 2px; }
+
+        /* ── Viewer Header ── */
+        .viewer-header-bar {
+            padding: 48px 80px 32px;
+            display: flex; align-items: flex-end; justify-content: space-between;
+        }
+
+        .viewer-header-left .section-eyebrow { margin-bottom: 10px; }
+
+        .viewer-h2 {
+            font-family: var(--font-editorial);
+            font-size: clamp(2rem, 3vw, 2.8rem);
+            font-weight: 700; line-height: 1.1;
+            color: var(--white);
+        }
+
+        .viewer-h2 span { color: var(--gold); font-style: italic; }
+
+        .viewer-header-right {
+            font-size: 0.88rem; color: var(--gray-light);
+            max-width: 340px; line-height: 1.7; text-align: right;
+        }
+
+        /* ── Engine Cards section ── */
+        .engines-section-header-row { margin-bottom: 12px; }
+
+        @media (max-width: 1024px) {
+            .motores-hero { grid-template-columns: 1fr; min-height: auto; }
+            .hero-right { height: 400px; }
+            .hero-arch-frame { width: 300px; height: 380px; border-radius: 150px 150px 0 0; }
+            .hero-left { padding: 60px 40px 40px; }
+            .viewer-header-bar { padding: 36px 32px 24px; flex-direction: column; align-items: flex-start; gap: 12px; }
+            .viewer-header-right { text-align: left; }
+        }
+
+        @media (max-width: 600px) {
+            .hero-stats { gap: 24px; }
+            .hero-left { padding: 48px 24px 32px; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ═ Racing Stripe ═ -->
+    <div class="racing-stripes"></div>
+
+    <!-- ═ Unified Nav ═ -->
+    <nav class="site-nav">
+        <a href="index.html" class="site-nav-logo">
+            <span class="logo-f">F</span><span class="logo-1">1</span>
+        </a>
+        <ul class="site-nav-links">
+            <li><a href="index.html">Inicio</a></li>
+            <li><a href="motores.html" class="active">Motores 3D</a></li>
+            <li><a href="tesis.html">Tesis</a></li>
+        </ul>
+        <a href="tesis.html" class="site-nav-cta">Ver Tesis →</a>
+    </nav>
+
+    <!-- ═ HERO ═ -->
+    <section class="motores-hero">
+        <div class="hero-left">
+            <div class="hero-eyebrow">
+                <div class="hero-eyebrow-line"></div>
+                <span class="hero-eyebrow-text">Fórmula 1 · Modelos 3D</span>
+            </div>
+            <h1 class="hero-title">
+                Motores de<br>
+                Fórmula 1 en<br>
+                <em>Modelos 3D</em>
+            </h1>
+            <p class="hero-desc">
+                Modelos 3D de la Fórmula 1: V6 Turbo Híbrido, V8, V10 y V12 Atmosféricos con audio del motor.
+            </p>
+            <div class="hero-actions">
+                <button class="btn-editorial" onclick="document.getElementById('viewer-section').scrollIntoView({behavior:'smooth'})">
+                    ⚙ Ver Modelos 3D
+                </button>
+                <a href="tesis.html" class="btn-link-small">
+                    Ver Tesis
+                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
+                </a>
+            </div>
+            <div class="hero-stats">
+                <div><div class="hero-stat-num">4</div><div class="hero-stat-label">Motores F1</div></div>
+                <div><div class="hero-stat-num">19,000</div><div class="hero-stat-label">RPM Máximos</div></div>
+                <div><div class="hero-stat-num">1,000+ CV</div><div class="hero-stat-label">Potencia</div></div>
+            </div>
+        </div>
+
+        <div class="hero-right">
+            <div class="hero-arch-frame">
+                <div class="hero-arch-visual">
+                    <svg viewBox="0 0 300 350" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="60" y="180" width="180" height="100" rx="6" fill="none" stroke="rgba(0,141,142,0.35)" stroke-width="1.5"/>
+                        <rect x="75" y="120" width="28" height="65" rx="4" fill="none" stroke="rgba(0,141,142,0.5)" stroke-width="1.5"/>
+                        <rect x="115" y="110" width="28" height="75" rx="4" fill="none" stroke="rgba(0,141,142,0.5)" stroke-width="1.5"/>
+                        <rect x="155" y="115" width="28" height="70" rx="4" fill="none" stroke="rgba(0,141,142,0.5)" stroke-width="1.5"/>
+                        <rect x="195" y="108" width="28" height="77" rx="4" fill="none" stroke="rgba(0,141,142,0.6)" stroke-width="1.5"/>
+                        <ellipse cx="89" cy="120" rx="14" ry="5" fill="rgba(0,141,142,0.1)" stroke="rgba(0,141,142,0.4)" stroke-width="1"/>
+                        <ellipse cx="129" cy="110" rx="14" ry="5" fill="rgba(0,141,142,0.12)" stroke="rgba(0,141,142,0.4)" stroke-width="1"/>
+                        <ellipse cx="169" cy="115" rx="14" ry="5" fill="rgba(0,141,142,0.1)" stroke="rgba(0,141,142,0.4)" stroke-width="1"/>
+                        <ellipse cx="209" cy="108" rx="14" ry="5" fill="rgba(0,141,142,0.15)" stroke="rgba(0,141,142,0.5)" stroke-width="1"/>
+                        <path d="M75 280 Q60 300 40 310" stroke="rgba(0,141,142,0.25)" stroke-width="2" fill="none"/>
+                        <path d="M215 280 Q235 300 255 308" stroke="rgba(0,141,142,0.25)" stroke-width="2" fill="none"/>
+                        <line x1="80" y1="260" x2="220" y2="260" stroke="rgba(0,141,142,0.15)" stroke-width="1" stroke-dasharray="4,4"/>
+                        <text x="150" y="235" text-anchor="middle" font-family="Arial,sans-serif" font-size="28" font-weight="900" fill="rgba(0,141,142,0.25)" letter-spacing="4">F1</text>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═ Divider ═ -->
+    <div class="section-divider"><div class="divider-line"></div></div>
+
+    <!-- ═ VIEWER 3D SECTION ═ -->
+    <section class="viewer-section" id="viewer-section">
+        <div class="viewer-header-bar reveal">
+            <div class="viewer-header-left">
+                <div class="section-eyebrow">
+                    <div class="eyebrow-line"></div>
+                    <span class="eyebrow-text">Fórmula 1</span>
+                </div>
+                <h2 class="viewer-h2">Modelos 3D de <span>Motores F1</span></h2>
+            </div>
+        </div>
+
+        <div id="engine-viewer-container"></div>
+    </section>
+
+    <!-- ═ Divider ═ -->
+    <div class="section-divider"><div class="divider-line"></div></div>
+
+    <!-- ═ ENGINE CARDS ═ -->
+    <section class="engines-section" id="engines-section">
+        <div class="engines-section-header reveal">
+            <div>
+                <div class="section-eyebrow">
+                    <div class="eyebrow-line"></div>
+                    <span class="eyebrow-text">Fórmula 1</span>
+                </div>
+                <h2 class="engines-section-title">Motores V6, V8, V10 y V12</h2>
+            </div>
+        </div>
+
+        <!-- V6 -->
+        <div class="engine-card engine-card--v6 reveal" id="card-v6">
+            <div class="engine-card-visual">
+                <div class="engine-card-bg"></div>
+                <div class="engine-visual-inner">
+                    <div class="engine-v-display">V6</div>
+                    <div class="cylinder-viz">
+                        <div class="cyl" style="height:50px;animation-delay:0s;"></div>
+                        <div class="cyl" style="height:60px;animation-delay:0.12s;"></div>
+                        <div class="cyl" style="height:54px;animation-delay:0.25s;"></div>
+                        <div class="cyl" style="height:60px;animation-delay:0.38s;"></div>
+                        <div class="cyl" style="height:50px;animation-delay:0.5s;"></div>
+                        <div class="cyl" style="height:58px;animation-delay:0.62s;"></div>
+                    </div>
+                </div>
+                <button class="engine-sound-btn" id="btn-v6" onclick="playEngine('v6')" title="Reproducir sonido">SONIDO</button>
+            </div>
+            <div class="engine-card-content">
+                <div class="engine-tag"><div class="engine-tag-dot"></div>Fórmula 1 · V6 Turbo Híbrido</div>
+                <h3 class="engine-card-title">Motor V6<br>Turbo híbrido</h3>
+                <div class="engine-card-subtitle">Unidad de Potencia · 1.6L</div>
+                <p class="engine-card-desc">
+                    La era actual de la Fórmula 1, iniciada en 2014. Los motores V6 turbo híbridos combinan
+                    un motor de combustión de 1.6 litros con sistemas ERS (MGU-H y MGU-K) que recuperan
+                    energía cinética y térmica. Con más de 1,000 CV de potencia combinada, son los motores
+                    de F1 más eficientes de la historia.
+                </p>
+                <div class="engine-specs">
+                    <div class="engine-spec"><div class="engine-spec-val">~15,000</div><div class="engine-spec-label">RPM máximos</div></div>
+                    <div class="engine-spec"><div class="engine-spec-val">1,000+ CV</div><div class="engine-spec-label">Potencia total</div></div>
+                    <div class="engine-spec"><div class="engine-spec-val">1.6L · 6 cil.</div><div class="engine-spec-label">Cilindrada</div></div>
+                    <div class="engine-spec"><div class="engine-spec-val">>50%</div><div class="engine-spec-label">Eficiencia térmica</div></div>
+                </div>
+                <span class="engine-era">Era 2014 – Presente</span>
+            </div>
+        </div>
+
+        <div class="engine-spacer"></div>
+
+        <!-- V8 -->
+        <div class="engine-card engine-card--v8 reveal" id="card-v8">
+            <div class="engine-card-visual">
+                <div class="engine-card-bg"></div>
+                <div class="engine-visual-inner">
+                    <div class="engine-v-display">V8</div>
+                    <div class="cylinder-viz">
+                        <div class="cyl" style="height:52px;animation-delay:0s;"></div>
+                        <div class="cyl" style="height:63px;animation-delay:0.09s;"></div>
+                        <div class="cyl" style="height:56px;animation-delay:0.18s;"></div>
+                        <div class="cyl" style="height:63px;animation-delay:0.27s;"></div>
+                        <div class="cyl" style="height:52px;animation-delay:0.36s;"></div>
+                        <div class="cyl" style="height:63px;animation-delay:0.45s;"></div>
+                        <div class="cyl" style="height:56px;animation-delay:0.54s;"></div>
+                        <div class="cyl" style="height:60px;animation-delay:0.63s;"></div>
+                    </div>
+                </div>
+                <button class="engine-sound-btn" id="btn-v8" onclick="playEngine('v8')" title="Reproducir sonido">SONIDO</button>
+            </div>
+            <div class="engine-card-content">
+                <div class="engine-tag"><div class="engine-tag-dot"></div>Fórmula 1 · V8 Atmosférico</div>
+                <h3 class="engine-card-title">Motor V8<br>Aspiración natural</h3>
+                <div class="engine-card-subtitle">2.4L · Ocho cilindros · 90°</div>
+                <p class="engine-card-desc">
+                    El V8 2.4L definió la era dorada de la F1 moderna entre 2006 y 2013. Con una limitación
+                    de 18,000 RPM producía un aullido mecánico inconfundible. Ferrari, Mercedes, Renault y
+                    Cosworth refinaron este motor hasta niveles de eficiencia y confiabilidad extraordinarios.
+                </p>
+                <div class="engine-specs">
+                    <div class="engine-spec"><div class="engine-spec-val">19,000</div><div class="engine-spec-label">RPM máximos</div></div>
+                    <div class="engine-spec"><div class="engine-spec-val">~750 CV</div><div class="engine-spec-label">Potencia</div></div>
+                    <div class="engine-spec"><div class="engine-spec-val">2.4L · 8 cil.</div><div class="engine-spec-label">Cilindrada</div></div>
+                    <div class="engine-spec"><div class="engine-spec-val">95 kg</div><div class="engine-spec-label">Peso mínimo</div></div>
+                </div>
+                <span class="engine-era">Era 2006 – 2013</span>
+            </div>
+        </div>
+
+        <div class="engine-spacer"></div>
+
+        <!-- V10 -->
+        <div class="engine-card engine-card--v10 reveal" id="card-v10">
+            <div class="engine-card-visual">
+                <div class="engine-card-bg"></div>
+                <div class="engine-visual-inner">
+                    <div class="engine-v-display">V10</div>
+                    <div class="cylinder-viz">
+                        <div class="cyl" style="height:48px;animation-delay:0s;"></div>
+                        <div class="cyl" style="height:60px;animation-delay:0.07s;"></div>
+                        <div class="cyl" style="height:54px;animation-delay:0.14s;"></div>
+                        <div class="cyl" style="height:65px;animation-delay:0.21s;"></div>
+                        <div class="cyl" style="height:58px;animation-delay:0.28s;"></div>
+                        <div class="cyl" style="height:65px;animation-delay:0.35s;"></div>
+                        <div class="cyl" style="height:54px;animation-delay:0.42s;"></div>
+                        <div class="cyl" style="height:60px;animation-delay:0.49s;"></div>
+                        <div class="cyl" style="height:48px;animation-delay:0.56s;"></div>
+                        <div class="cyl" style="height:58px;animation-delay:0.63s;"></div>
+                    </div>
+                </div>
+                <button class="engine-sound-btn" id="btn-v10" onclick="playEngine('v10')" title="Reproducir sonido">SONIDO</button>
+            </div>
+            <div class="engine-card-content">
+                <div class="engine-tag"><div class="engine-tag-dot"></div>Fórmula 1 · V10 Atmosférico</div>
+                <h3 class="engine-card-title">Motor V10<br>Atmosférico F1</h3>
+                <div class="engine-card-subtitle">3.0L · Diez cilindros · 72°</div>
+                <p class="engine-card-desc">
+                    Configuración de Fórmula 1 entre 1995 y 2005. Bloque de 3.0 litros de aspiración natural
+                    capaz de alcanzar 18,000 RPM con bancadas en ángulo de 72°, entregando ~900 CV y una respuesta
+                    inmediata de potencia.
+                </p>
+                <div class="engine-specs">
+                    <div class="engine-spec"><div class="engine-spec-val">18,000</div><div class="engine-spec-label">RPM máximos</div></div>
+                    <div class="engine-spec"><div class="engine-spec-val">~900 CV</div><div class="engine-spec-label">Potencia</div></div>
+                    <div class="engine-spec"><div class="engine-spec-val">3.0L · 10 cil.</div><div class="engine-spec-label">Cilindrada</div></div>
+                    <div class="engine-spec"><div class="engine-spec-val">~100 kg</div><div class="engine-spec-label">Peso</div></div>
+                </div>
+                <span class="engine-era">Era 1995 – 2005</span>
+            </div>
+        </div>
+
+        <div class="engine-spacer"></div>
+
+        <!-- V12 -->
+        <div class="engine-card engine-card--v12 reveal" id="card-v12">
+            <div class="engine-card-visual">
+                <div class="engine-card-bg"></div>
+                <div class="engine-visual-inner">
+                    <div class="engine-v-display">V12</div>
+                    <div class="cylinder-viz">
+                        <div class="cyl" style="height:45px;animation-delay:0s;"></div>
+                        <div class="cyl" style="height:56px;animation-delay:0.06s;"></div>
+                        <div class="cyl" style="height:50px;animation-delay:0.12s;"></div>
+                        <div class="cyl" style="height:60px;animation-delay:0.18s;"></div>
+                        <div class="cyl" style="height:54px;animation-delay:0.24s;"></div>
+                        <div class="cyl" style="height:62px;animation-delay:0.30s;"></div>
+                        <div class="cyl" style="height:62px;animation-delay:0.36s;"></div>
+                        <div class="cyl" style="height:54px;animation-delay:0.42s;"></div>
+                        <div class="cyl" style="height:60px;animation-delay:0.48s;"></div>
+                        <div class="cyl" style="height:50px;animation-delay:0.54s;"></div>
+                        <div class="cyl" style="height:56px;animation-delay:0.60s;"></div>
+                        <div class="cyl" style="height:45px;animation-delay:0.66s;"></div>
+                    </div>
+                </div>
+                <button class="engine-sound-btn" id="btn-v12" onclick="playEngine('v12')" title="Reproducir sonido">SONIDO</button>
+            </div>
+            <div class="engine-card-content">
+                <div class="engine-tag"><div class="engine-tag-dot"></div>Fórmula 1 · V12 Atmosférico</div>
+                <h3 class="engine-card-title">Motor V12<br>Atmosférico F1</h3>
+                <div class="engine-card-subtitle">3.5L · Doce cilindros · 60°</div>
+                <p class="engine-card-desc">
+                    Motor de 3.5 litros y doce cilindros a 60° utilizado en la Fórmula 1 hasta 1995. Destaca por
+                    su perfecto equilibrio de segundo orden, 12 trompetas de admisión independientes y una entrega
+                    lineal de 700 CV a 15,000 RPM.
+                </p>
+                <div class="engine-specs">
+                    <div class="engine-spec"><div class="engine-spec-val">15,000</div><div class="engine-spec-label">RPM máximos</div></div>
+                    <div class="engine-spec"><div class="engine-spec-val">~700 CV</div><div class="engine-spec-label">Potencia</div></div>
+                    <div class="engine-spec"><div class="engine-spec-val">3.5L · 12 cil.</div><div class="engine-spec-label">Cilindrada</div></div>
+                    <div class="engine-spec"><div class="engine-spec-val">~150 kg</div><div class="engine-spec-label">Peso</div></div>
+                </div>
+                <span class="engine-era">Era 1987 – 1995</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═ Footer ═ -->
+    <footer class="site-footer">
+        <span class="footer-logo">FORMULA 1</span>
+        <span class="footer-copy">Proyecto universitario · Ingeniería F1</span>
+        <a href="index.html" class="footer-link">← Inicio</a>
+    </footer>
+
+    <script src="three.min.js"></script>
+    <script src="OrbitControls.js"></script>
+    <script src="engine-viewer.js"></script>
+    <script>
+        /* Scroll Reveal */
+        const revealEls = document.querySelectorAll('.reveal');
+        const obs = new IntersectionObserver(entries => {
+            entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+        }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+        revealEls.forEach(el => obs.observe(el));
+    </script>
+</body>
+</html>
