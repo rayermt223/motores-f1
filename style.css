@@ -1,9 +1,59 @@
 /* ═══════════════════════════════════════════
    FORMULA 1 — GLOBAL STYLES
-   Palette: Black (#0a0a0a) + Gold (#FFD700)
+   Palette: Universidad ETAC Teal (#008D8E) + Dark Slate
+   Typography: TT Fors Bold (Headings) + TT Fors Medium (Paragraphs)
    ═══════════════════════════════════════════ */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,700;0,900;1,700&display=swap');
+/* ── TT Fors Custom Fonts (From tt_fors) ── */
+@font-face {
+    font-family: 'TT Fors';
+    src: url('fonts/TT-Fors-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'TT Fors';
+    src: url('fonts/TT-Fors-Bold.ttf') format('truetype');
+    font-weight: 800;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'TT Fors';
+    src: url('fonts/TT-Fors-Bold.ttf') format('truetype');
+    font-weight: 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'TT Fors';
+    src: url('fonts/TT-Fors-Medium.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'TT Fors';
+    src: url('fonts/TT-Fors-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'TT Fors';
+    src: url('fonts/TT-Fors-Medium.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 /* ── Reset & Base ── */
 *, *::before, *::after {
@@ -36,9 +86,13 @@
     --gray-light: #91abb0;
     --white: #ffffff;
     --white-soft: #f4fafa;
-    --font-racing: 'Inter', Arial, sans-serif;
-    --font-body: 'Inter', Arial, sans-serif;
-    --font-editorial: 'Playfair Display', serif;
+
+    /* TT Fors Typography Mapping */
+    --font-heading: 'TT Fors', 'Inter', Arial, sans-serif;
+    --font-body: 'TT Fors', 'Inter', Arial, sans-serif;
+    --font-racing: 'TT Fors', 'Inter', Arial, sans-serif;
+    --font-editorial: 'TT Fors', 'Inter', Arial, sans-serif;
+
     --glow-gold: 0 0 20px rgba(0, 141, 142, 0.4), 0 0 60px rgba(0, 141, 142, 0.15);
     --glow-gold-strong: 0 0 30px rgba(0, 141, 142, 0.6), 0 0 80px rgba(0, 141, 142, 0.25);
     --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
@@ -50,12 +104,54 @@ html { scroll-behavior: smooth; }
 
 body {
     font-family: var(--font-body);
+    font-weight: 500;
     background: var(--black);
     color: var(--white);
     overflow-x: hidden;
     min-height: 100vh;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Encabezados con TT Fors Bold ── */
+h1, h2, h3, h4, h5, h6,
+.poster-main-title,
+.hero-title,
+.viewer-h2,
+.engines-section-title,
+.engine-card-title,
+.hec-title,
+.ev-title,
+.ev-eng-name,
+.ev-sel-btn,
+.ev-smb-title,
+.site-nav-logo,
+.hero-stat-num,
+.engine-spec-val,
+.section-eyebrow,
+.ev-sel-label {
+    font-family: var(--font-heading);
+    font-weight: 700;
+}
+
+/* ── Párrafos con TT Fors Medium ── */
+p,
+.poster-abstract-text,
+.poster-meta-cell,
+.poster-thesis-callout,
+.poster-bottom-label,
+.hero-desc,
+.viewer-header-right,
+.engine-card-desc,
+.hec-spec,
+.ev-desc,
+.ev-stat-label,
+.engine-spec-label,
+.engine-era,
+.footer-copy,
+.hero-stat-label {
+    font-family: var(--font-body);
+    font-weight: 500;
 }
 
 a { text-decoration: none; color: inherit; }
